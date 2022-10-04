@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/open_in_youtube"
+        android:id="@+id/open_in_yt"
+        />
+
+    <item android:title="@string/download"
+        android:id="@+id/download"/>
+
+</menu>

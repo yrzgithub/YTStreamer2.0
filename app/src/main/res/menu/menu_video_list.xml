@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.ytstreamer40.VideoList">
+
+    <item android:title="@string/search"
+        android:id="@+id/search_video_list_menu"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_baseline_search_24"
+        tools:ignore="AlwaysShowAction"
+        app:actionViewClass="android.widget.SearchView" />
+
+    <item android:id="@+id/git"
+        android:title="@string/open_in_github"
+        app:showAsAction="never"
+        />
+
+    <item android:id="@+id/search_in_yt_menu"
+        android:title="@string/search_in_youtube"
+        app:showAsAction="never"
+        />
+
+</menu>

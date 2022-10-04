@@ -1,0 +1,12 @@
+<resources>
+
+    <string-array name="lyrics_entries">
+        <item>App</item>
+        <item>Browser</item>
+    </string-array>
+
+    <string-array name="lyrics_values">
+        <item>app</item>
+        <item>browser</item>
+    </string-array>
+</resources>

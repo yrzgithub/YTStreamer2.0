@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.ytstreamer40">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
+    <application
+        android:name="com.chaquo.python.android.PyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.YTStreamer40">
+
+        <activity
+            android:name=".PlaylistSongs"
+            android:exported="false" />
+        <activity
+            android:name=".PlayListsAct"
+            android:exported="false" />
+        <activity
+            android:name=".DeveloperContact"
+            android:exported="false" />
+        <activity
+            android:name=".About"
+            android:exported="false" />
+        <activity
+            android:name=".WebBrowserAct"
+            android:exported="false" />
+        <activity
+            android:name=".Lyrics"
+            android:exported="false"
+            android:label="Google Results" />
+        <activity
+            android:name=".LocalSongs"
+            android:exported="false"
+            android:label="Local Songs" />
+        <activity
+            android:name=".MainActivity"
+            android:alwaysRetainTaskState="true"
+            android:exported="true"
+            android:label="YT Streamer"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".DownloadsAct"
+            android:exported="false"
+            android:label="Downloader" />
+        <activity
+            android:name=".VideoList"
+            android:exported="false"
+            android:label="Search" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/action_settings" />
+    </application>
+
+</manifest>

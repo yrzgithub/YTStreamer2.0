@@ -1,0 +1,207 @@
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/player_nav"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/player_navig"
+                android:contentDescription="@string/none" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:text="@string/player"
+                android:gravity="fill"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="5dp" />
+
+        </LinearLayout>
+
+     <LinearLayout
+         android:id="@+id/player_playlist"
+         android:layout_width="match_parent"
+         android:layout_height="50dp"
+         android:clickable="true"
+         android:focusable="true"
+         android:orientation="horizontal"
+         android:layout_marginTop="5dp"
+         android:layout_marginStart="5dp"
+         tools:ignore="UseCompoundDrawables">
+
+         <ImageView
+             android:layout_width="40dp"
+             android:layout_height="30dp"
+             android:layout_gravity="center"
+             android:src="@drawable/player_playlists"
+             android:contentDescription="@string/none" />
+
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:singleLine="true"
+             android:text="@string/playlists"
+             android:gravity="fill"
+             android:textSize="20sp"
+             android:textColor="@color/black"
+             android:layout_marginStart="5dp" />
+
+     </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/songs_list_nav"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/search_nav"
+                android:contentDescription="@string/none" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:text="@string/songs_list"
+                android:gravity="fill"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/downloads_nav"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/download"
+                android:contentDescription="@string/none" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:text="@string/downloads"
+                android:gravity="fill"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settings_nav"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/settings_ico"
+                android:contentDescription="@string/none" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:text="@string/action_settings"
+                android:gravity="fill"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/about_nav"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/about"
+                android:contentDescription="@string/none" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:text="@string/about"
+                android:gravity="fill"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/developer_contact_nav"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/contact"
+                android:contentDescription="@string/none" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:text="@string/developer_contact"
+                android:gravity="fill"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="5dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>

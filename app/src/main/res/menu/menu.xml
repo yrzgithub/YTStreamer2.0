@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/search"
+        app:showAsAction="always"
+        android:title="@string/search"
+        android:icon="@drawable/ic_baseline_search_24"
+        app:actionViewClass="android.widget.SearchView" />
+
+    <item android:id="@+id/download"
+        android:visible="false"
+        android:icon="@drawable/ic_baseline_download_24"
+        app:showAsAction="always"
+        android:title="@string/downloads"/>
+
+    <item android:id="@+id/add_to_playlist"
+        android:icon="@drawable/plus"
+        app:showAsAction="ifRoom"
+        android:title="@string/add_song" />
+
+    <item android:title="@string/open_in_github"
+        android:id="@+id/git"
+        app:showAsAction="never"
+        />
+
+    <item android:id="@+id/open_in_yt"
+        android:title="@string/open_in_youtube"
+        app:showAsAction="never"/>
+
+    <item android:title="@string/show_lyrics"
+        android:id="@+id/lyrics"
+        app:showAsAction="never" />
+
+</menu>

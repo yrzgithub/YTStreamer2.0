@@ -16,6 +16,8 @@ Features:
   
   7. Parallel download (Download multiple files at the same time) etc..
   
+  8. Shows Lyrics in app or browser.
+
   Note : This app gives its best in android 11 and android 12.
   
   Languages used : java, python, xml.

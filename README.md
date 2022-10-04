@@ -8,7 +8,7 @@ Features:
 
   3. Downloads YouTube audio (in Downloads Folder)
   
-  4. Play local songs (from Downloads folder)
+  4. Play local songs from Downloads folder (Android version >=11)
   
   5. Create custom playlist with YouTube Keywords and Local Audio.
   

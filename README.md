@@ -18,7 +18,7 @@ Features:
   
   8. Shows Lyrics in app or browser etc...
 
-  Note : This app gives its best in android 11 and android 12.
+  Note : This app gives its best in android 11 or above.
   
   Languages used : java, python, xml.
   

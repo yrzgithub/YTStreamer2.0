@@ -14,9 +14,9 @@ Features:
   
   6. GUI improved.
   
-  7. Parallel download (Download multiple files at the same time) etc..
+  7. Parallel download (Download multiple files at the same time)
   
-  8. Shows Lyrics in app or browser.
+  8. Shows Lyrics in app or browser etc...
 
   Note : This app gives its best in android 11 and android 12.
   

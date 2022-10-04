@@ -1,4 +1,4 @@
-YTStreamer2.0 is an updated version of YTStreamer
+YTStreamer 2.0 is an updated version of YTStreamer
 
 Features:
 

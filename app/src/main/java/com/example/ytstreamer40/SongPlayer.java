@@ -12,7 +12,7 @@ public class SongPlayer extends MediaPlayer {
 
     private static final int SKIP = 5000;
     MediaPlayer media_player;
-    boolean stream, buffering_completed = false,is_playlist_playing = false;
+    boolean stream, buffering_completed = false;
 
     SongPlayer(String source, boolean stream)
     {
@@ -63,20 +63,9 @@ public class SongPlayer extends MediaPlayer {
         {
             super.start();
         }
-        catch (Exception ignored)
-        {
+        catch (Exception ignored) {
 
         }
-    }
-
-    public void setIsPlaylistPlaying(boolean playing)
-    {
-        is_playlist_playing = playing;
-    }
-
-    public boolean getIsPlaylistPlaying()
-    {
-        return is_playlist_playing;
     }
 
     public void pause(ImageView play, ImageView thumbnail) {

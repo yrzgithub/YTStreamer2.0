@@ -345,7 +345,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         songPlayer = new SongPlayer(title_song,false);
                         songPlayer.setOnPreparedListener(media_on_prepared_local);
                         songPlayer.setOnCompletionListener(this);
-                        songPlayer.setIsPlaylistPlaying(true);
                         seek.setSecondaryProgressTintMode(PorterDuff.Mode.DARKEN);
                         seek.setOnSeekBarChangeListener(seek_listener);
                     }
@@ -363,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else
                 {
-                    from_link(title_song, true, this,true);
+                    from_link(title_song, true, this);
                 }
             }
         };
@@ -531,7 +530,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         songPlayer = new SongPlayer(playlist_title_intent,false);
                         songPlayer.setOnPreparedListener(media_on_prepared_local);
                         songPlayer.setOnCompletionListener(play_list_on_completion_listener);
-                        songPlayer.setIsPlaylistPlaying(true);
                         seek.setOnSeekBarChangeListener(seek_listener);
                     }
                     catch (Exception e)
@@ -549,7 +547,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 else
                 {
-                    from_link(playlist_title_intent,true,play_list_on_completion_listener,true);
+                    from_link(playlist_title_intent,true,play_list_on_completion_listener);
                 }
             }
             else
@@ -570,7 +568,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             {
                 loading();
                 String url = intent.getStringExtra(Intent.EXTRA_TEXT);
-                from_link(url, false,on_complete_listener,false);
+                from_link(url, false,on_complete_listener);
             }
         }
     }
@@ -773,7 +771,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     {
                         songPlayer.pause(play,thumbnail);
                     }
-                    from_link(query,true,on_complete_listener,false);
+                    from_link(query,true,on_complete_listener);
                 }
                 return true;
             }
@@ -835,7 +833,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return saved_data.getString("last_query","anbe en anbe");
     }
 
-    public void from_link(String source,boolean query,MediaPlayer.OnCompletionListener complete_listener,boolean playlist_playing)
+    public void from_link(String source,boolean query,MediaPlayer.OnCompletionListener complete_listener)
     {
         new Thread(new Runnable() {
             @SuppressLint("UseCompatLoadingForDrawables")
@@ -896,7 +894,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 songPlayer.setOnPreparedListener(media_on_prepared);
                                 songPlayer.setOnCompletionListener(complete_listener);
                                 songPlayer.setOnBufferingUpdateListener(buffer_update_listener);
-                                songPlayer.setIsPlaylistPlaying(playlist_playing);
                                 seek.setOnSeekBarChangeListener(seek_listener);
                             }
                         });

@@ -155,12 +155,23 @@ public class VideoList extends AppCompatActivity {
         SearchView search = (SearchView) menu.findItem(R.id.search_video_list_menu).getActionView();
 
         AutoCompleteTextView auto = (AutoCompleteTextView) search.findViewById(search.getContext().getResources().getIdentifier("android:id/search_src_text",null,null));
-        auto.setThreshold(1);
         auto.setDropDownBackgroundResource(R.color.white);
+        auto.setValidator(new AutoCompleteTextView.Validator() {
+            @Override
+            public boolean isValid(CharSequence text) {
+                return true;
+            }
+
+            @Override
+            public CharSequence fixText(CharSequence invalidText) {
+                return invalidText;
+            }
+        });
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                MainActivity.setLastQuery(query);
                 Intent intent  = new Intent(VideoList.this,VideoList.class);
                 intent.putExtra("search",query);
                 startActivity(intent);
@@ -170,20 +181,25 @@ public class VideoList extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         String[]suggestions;
                         try {
                             suggestions = main.callAttr("suggest",newText).toJava(String[].class);
-                            ArrayAdapter<String> suggestions_list = new ArrayAdapter<String>(VideoList.this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestions);
+                            if(suggestions.length>0)
+                            {
+                                ArrayAdapter<String> suggestions_list = new ArrayAdapter<String>(VideoList.this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestions);
 
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    auto.setAdapter(suggestions_list);
-                                }
-                            });
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        auto.setAdapter(suggestions_list);
+                                        if(!auto.isPopupShowing()) auto.showDropDown();
+                                    }
+                                });
+                            }
                         }
                         catch (PyException ignored)
                         {

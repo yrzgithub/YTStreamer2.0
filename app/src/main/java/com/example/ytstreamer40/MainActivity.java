@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout player_nav,songs_list,downloads,settings,about,developer_contact,playlist_nav;
     MenuItem download_item;
     SharedPreferences saved_data;
-    SharedPreferences.Editor saved_data_editor;
     Settings setting;
     int previous_headset_value = -1,current_playlist_song_index = 0;
     String[] sngs;
@@ -97,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static MediaPlayer.OnPreparedListener media_on_prepared;
     static MediaPlayer.OnCompletionListener on_complete_listener,play_list_on_completion_listener;
     static MediaPlayer.OnBufferingUpdateListener buffer_update_listener;
+    static SharedPreferences.Editor saved_data_editor;
     static String git_url = "https://www.github.com/yrzgithub";
     static PyObject main = Python.getInstance().getModule("main");
 
@@ -267,6 +267,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onPrepared(MediaPlayer mp) {
 
+                seek.setSecondaryProgress(0);
+
                 songPlayer.start(play,thumbnail);
 
                 end_time.setText(current_time(duration));
@@ -323,6 +325,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
 
                 }
+
                 start_time.setText(getString(R.string._0_0));
                 end_time.setText(getString(R.string._0_0));
                 title.setText("");
@@ -330,6 +333,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(title_song.startsWith(PlayListSongsAdapter.download_path))
                 {
                     Glide.with(MainActivity.this).load(R.drawable.yt).into(thumbnail);
+
                     try
                     {
                         retriever.setDataSource(title_song);
@@ -341,6 +345,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         songPlayer = new SongPlayer(title_song,false);
                         songPlayer.setOnPreparedListener(media_on_prepared_local);
                         songPlayer.setOnCompletionListener(this);
+                        songPlayer.setIsPlaylistPlaying(true);
                         seek.setSecondaryProgressTintMode(PorterDuff.Mode.DARKEN);
                         seek.setOnSeekBarChangeListener(seek_listener);
                     }
@@ -358,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else
                 {
-                    from_link(title_song, true, this);
+                    from_link(title_song, true, this,true);
                 }
             }
         };
@@ -387,6 +392,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             {
                 songPlayer.setOnBufferingUpdateListener(buffer_update_listener);
             }
+
             songPlayer.setOnCompletionListener(on_complete_listener);
 
             boolean playing;
@@ -468,7 +474,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             else if(intent.hasExtra("local_songs"))
             {
-
                 Glide.with(this).load(R.drawable.local_song_playing).into(thumbnail);
 
                 Bundle bundle = intent.getBundleExtra("local_songs");
@@ -526,6 +531,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         songPlayer = new SongPlayer(playlist_title_intent,false);
                         songPlayer.setOnPreparedListener(media_on_prepared_local);
                         songPlayer.setOnCompletionListener(play_list_on_completion_listener);
+                        songPlayer.setIsPlaylistPlaying(true);
                         seek.setOnSeekBarChangeListener(seek_listener);
                     }
                     catch (Exception e)
@@ -543,7 +549,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 else
                 {
-                    from_link(playlist_title_intent,true,play_list_on_completion_listener);
+                    from_link(playlist_title_intent,true,play_list_on_completion_listener,true);
                 }
             }
             else
@@ -558,12 +564,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             {
                 Glide.with(this).load(R.drawable.yt).into(thumbnail);
                 title.setText("Hello Cutie!");
+
             }
             else if (action.equals(Intent.ACTION_SEND))
             {
                 loading();
                 String url = intent.getStringExtra(Intent.EXTRA_TEXT);
-                from_link(url, false,on_complete_listener);
+                from_link(url, false,on_complete_listener,false);
             }
         }
     }
@@ -614,10 +621,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onPause() {
-        if(receiver!=null)
-        {
-            unregisterReceiver(receiver);
-        }
         super.onPause();
     }
 
@@ -640,8 +643,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.songs_list_nav:
-                if(action.equals("play")) super.onBackPressed();
-                else Toast.makeText(this, "Songs List Not Found", Toast.LENGTH_SHORT).show();
+                String last_query = getLastQuery();
+                if(songPlayer!=null)
+                {
+                    if(songPlayer.isStreaming())
+                    {
+                        Intent intent = new Intent(MainActivity.this,VideoList.class);
+                        intent.putExtra("search",last_query);
+                        startActivity(intent);
+                    }
+                    else
+                    {
+                        startActivity(new Intent(MainActivity.this,LocalSongs.class));
+                    }
+                }
+                else 
+                {
+                    Intent intent = new Intent(MainActivity.this,VideoList.class);
+                    intent.putExtra("search",last_query);
+                    startActivity(intent);
+                }
                 break;
 
             case R.id.downloads_nav:
@@ -655,7 +676,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.about_nav:
                 intent = new Intent();
-                intent.setData(Uri.parse("https://sites.google.com/sairamtap.edu.in/sanjaykumaryr/home"));
+                intent.setData(Uri.parse("https://github.com/yrzgithub/YTStreamer2.0"));
                 startActivity(intent);
                 break;
 
@@ -711,8 +732,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         AutoCompleteTextView auto = (AutoCompleteTextView) search.findViewById(search.getContext().getResources().getIdentifier("android:id/search_src_text",null,null));
         auto.setHint("Search YouTube");
-        auto.setThreshold(1);
         auto.setDropDownBackgroundResource(R.color.white);
+        auto.setValidator(new AutoCompleteTextView.Validator() {
+            @Override
+            public boolean isValid(CharSequence text) {
+                return true;
+            }
+
+            @Override
+            public CharSequence fixText(CharSequence invalidText) {
+                return invalidText;
+            }
+        });
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -742,7 +773,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     {
                         songPlayer.pause(play,thumbnail);
                     }
-                    from_link(query,true,on_complete_listener);
+                    from_link(query,true,on_complete_listener,false);
                 }
                 return true;
             }
@@ -754,28 +785,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void run() {
                         String[] suggestions;
-                        ArrayAdapter<String> suggestions_list = null;
-                        try {
+                        try
+                        {
                             suggestions = main.callAttr("suggest",newText).toJava(String[].class);
-
+                            Log.e("sanjay", Arrays.toString(suggestions));
                             if(suggestions.length>0)
                             {
-                                suggestions_list = new ArrayAdapter<String>(MainActivity.this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestions);
-                                ArrayAdapter<String> finalSuggestions_list = suggestions_list;
+                                ArrayAdapter<String> suggestions_list = new ArrayAdapter<String>(MainActivity.this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestions);
+
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        auto.setAdapter(finalSuggestions_list);
+                                        auto.setAdapter(suggestions_list);
+                                        if(!auto.isPopupShowing()) auto.showDropDown();
                                     }
                                 });
                             }
                         }
+
                         catch (PyException ignored)
                         {
-                            if(suggestions_list!=null && suggestions_list.getCount()>0)
-                            {
-                                auto.setAdapter(suggestions_list);
-                            }
+
                         }
                     }
                 }).start();
@@ -794,7 +824,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    public void setLastQuery(String query)
+    public static void setLastQuery(String query)
     {
         saved_data_editor.putString("last_query",query);
         saved_data_editor.commit();
@@ -805,7 +835,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return saved_data.getString("last_query","anbe en anbe");
     }
 
-    public void from_link(String source,boolean query,MediaPlayer.OnCompletionListener complete_listener)
+    public void from_link(String source,boolean query,MediaPlayer.OnCompletionListener complete_listener,boolean playlist_playing)
     {
         new Thread(new Runnable() {
             @SuppressLint("UseCompatLoadingForDrawables")
@@ -866,6 +896,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 songPlayer.setOnPreparedListener(media_on_prepared);
                                 songPlayer.setOnCompletionListener(complete_listener);
                                 songPlayer.setOnBufferingUpdateListener(buffer_update_listener);
+                                songPlayer.setIsPlaylistPlaying(playlist_playing);
                                 seek.setOnSeekBarChangeListener(seek_listener);
                             }
                         });
@@ -1105,11 +1136,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case  id.add_to_playlist:
-                if(songPlayer==null)
-                {
-                    Toast.makeText(this,"Not available at the moment",Toast.LENGTH_LONG).show();
-                    break;
-                }
                 Intent intent = new Intent(MainActivity.this,PlayListsAct.class);
                 intent.setAction("choose");
 
@@ -1153,6 +1179,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
+        if(receiver!=null)
+        {
+            unregisterReceiver(receiver);
+        }
         super.onDestroy();
     }
 

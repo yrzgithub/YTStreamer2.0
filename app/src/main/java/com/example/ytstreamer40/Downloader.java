@@ -3,8 +3,6 @@ package com.example.ytstreamer40;
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.util.Log;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -69,7 +67,6 @@ public class Downloader extends AsyncTask {
         {
             data.delete();
         }
-
         super.onPostExecute(o);
     }
 
@@ -95,7 +92,6 @@ public class Downloader extends AsyncTask {
             connection.connect();
             InputStream stream = url.openStream();
             OutputStream out_stream = new FileOutputStream(data.getPath());
-            Log.d("sanjay",data.getPath());
             byte[] bytes = new byte[BUFFER_SIZE];
             total = connection.getContentLength();
             while ((count = stream.read(bytes))!=-1)

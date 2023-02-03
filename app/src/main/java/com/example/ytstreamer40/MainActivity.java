@@ -358,8 +358,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         title_str = title_song.replaceFirst(PlayListSongsAdapter.download_path, "").replaceFirst(File.separator, "");
                         duration = Integer.parseInt(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)) / 1000;
 
+                        Log.e("sanjay",title_song);
                         title.setText(title_str);
-                        Log.e("sanjay_tit", title_str);
                         songPlayer = new SongPlayer(title_song, false);
                         songPlayer.setOnPreparedListener(media_on_prepared_local);
                         songPlayer.setOnCompletionListener(this);
@@ -517,6 +517,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 .setAction("remove", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+                                        Log.e("sanjay_tit", title_str);
                                         new PlayListSongsAdapter(MainActivity.this, playlist).delete(playlist_title_intent);
                                     }
                                 })

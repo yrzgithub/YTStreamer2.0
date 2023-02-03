@@ -32,6 +32,12 @@ public class Downloader extends AsyncTask {
         this.stream_url = stream_url;
     }
 
+    static String getSavedFilePath(String file_name)
+    {
+        file_name = file_name.replaceAll("[^A-Za-z 0-9]","")  + YT_default + ".mp3";
+        return new File(dir,file_name).getPath();
+    }
+
     public static boolean new_file(String file_name)
     {
         file_name+= YT_default + ".mp3";

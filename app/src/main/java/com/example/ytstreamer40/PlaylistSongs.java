@@ -11,10 +11,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,13 +30,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.chaquo.python.PyException;
+import com.chaquo.python.PyObject;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,6 +51,7 @@ public class PlaylistSongs extends AppCompatActivity {
 
     PlayListSongsAdapter adapter;
     String name;
+    ListView songs = null;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -55,7 +64,7 @@ public class PlaylistSongs extends AppCompatActivity {
 
         adapter = new PlayListSongsAdapter(this,name);
 
-        ListView songs = findViewById(R.id.sgn_list);
+        songs = findViewById(R.id.sgn_list);
         songs.setAdapter(adapter);
 
         songs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -96,8 +105,23 @@ public class PlaylistSongs extends AppCompatActivity {
                                 String song = txt.getText().toString();
                                 if(!song.isEmpty())
                                 {
-                                    String msg = adapter.add_song_to_playlist(song);
-                                    Toast.makeText(PlaylistSongs.this,msg,Toast.LENGTH_SHORT).show();
+                                    Snackbar snack = Snackbar.make(songs,"Searching local songs list",Snackbar.LENGTH_INDEFINITE);
+                                    snack.show();
+                                    new Thread()
+                                    {
+                                        @Override
+                                        public void run() {
+                                            String msg = adapter.add_song_to_playlist(song);
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    snack.dismiss();
+                                                    Toast.makeText(PlaylistSongs.this,msg,Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                            super.run();
+                                        }
+                                    }.start();
                                 }
                                 else
                                 {
@@ -166,15 +190,40 @@ class PlayListSongsAdapter extends BaseAdapter {
 
     String add_song_to_playlist(String song)
     {
+        String generated_title = null;
         if(songs!=null && !songs.contains(song))
         {
-            songs.add(song);
+            try
+            {
+                Map<PyObject,PyObject> search_data = MainActivity.main.callAttr("get_stream_and_thumb",song).asMap();
+                generated_title = search_data.get(PyObject.fromJava("title")).toString();
+                String path = Downloader.getSavedFilePath(generated_title);
+                File file = new File(path);
+                if(file.exists())
+                {
+                    songs.add(path);
+                }
+                else
+                {
+                    songs.add(song);
+                }
+            }
+
+            catch(Exception e) {
+                songs.add(song);
+            }
+
             PlayListAdapter.playlists_data.put(name,songs);
             String data = gson.toJson(PlayListAdapter.playlists_data,Map.class);
             editor.putString("playlists_data",data);
             editor.apply();
 
-            act.recreate();
+            act.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    act.recreate();
+                }
+            });
 
             return "Song added";
         }

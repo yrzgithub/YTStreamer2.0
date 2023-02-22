@@ -1,4 +1,4 @@
-../../bin/youtube-dl.exe,sha256=2y7XfTLfPvSf5ImvwHciRbSJpTZOH6QYj1FrLQZoOWc,106341
+../../Scripts/youtube-dl.exe,sha256=vTS0C-Ss7eLcVX-2gsL_h4Ggt7FuYWGqEU3PJc9l7Fs,108389
 ../../etc/bash_completion.d/youtube-dl.bash-completion,sha256=_zV7oBnEJV-WR5QFrjUhTIG5990yaJ6s53MhQAJP-js,3373
 ../../etc/fish/completions/youtube-dl.fish,sha256=UcUVUO9bmPr8qnec0xz5WkBlzXz7Q3hM3__nLddSp_I,25206
 ../../share/doc/youtube_dl/README.txt,sha256=hyloi3WdPr5jvob_U7ygTPsUi-BG_sdmDWH3fXR4siQ,92275

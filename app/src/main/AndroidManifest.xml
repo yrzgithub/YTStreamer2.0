@@ -31,9 +31,6 @@
             android:name=".DeveloperContact"
             android:exported="false" />
         <activity
-            android:name=".About"
-            android:exported="false" />
-        <activity
             android:name=".WebBrowserAct"
             android:exported="false" />
         <activity

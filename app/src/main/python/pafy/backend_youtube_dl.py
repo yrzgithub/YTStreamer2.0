@@ -7,8 +7,6 @@ import subprocess
 if sys.version_info[:2] >= (3, 0):
     # pylint: disable=E0611,F0401,I0011
     uni = str
-else:
-    uni = unicode
 
 import youtube_dl
 
@@ -52,7 +50,7 @@ class YtdlPafy(BasePafy):
         self._viewcount = self._ydl_info['view_count']
         #self._likes = self._ydl_info['like_count']
         #self._dislikes = self._ydl_info['dislike_count']
-        self._username = self._ydl_info['uploader_id']
+        #self._username = self._ydl_info['uploader_id']
         self._category = self._ydl_info['categories'][0] if self._ydl_info['categories'] else ''
         self._bestthumb = self._ydl_info['thumbnails'][0]['url']
         self._bigthumb = g.urls['bigthumb'] % self.videoid

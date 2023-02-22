@@ -118,7 +118,7 @@ public class DownloadsAct extends AppCompatActivity {
 
                                     if(Settings.DownloadSettings.complete_list && allfiles)
                                     {
-                                        new ShowNotification(DownloadsAct.this,"Download Manager","All files downloaded",position).show();
+                                        new ShowNotification(DownloadsAct.this,"Download Manager","All files downloaded",200).show();
                                     }
 
                                     current.set_notified(true);

@@ -712,17 +712,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AutoCompleteTextView auto = (AutoCompleteTextView) search.findViewById(search.getContext().getResources().getIdentifier("android:id/search_src_text",null,null));
         auto.setHint("Search YouTube");
         auto.setDropDownBackgroundResource(R.color.white);
-        auto.setValidator(new AutoCompleteTextView.Validator() {
-            @Override
-            public boolean isValid(CharSequence text) {
-                return true;
-            }
-
-            @Override
-            public CharSequence fixText(CharSequence invalidText) {
-                return invalidText;
-            }
-        });
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -763,18 +752,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String[] suggestions;
                         try
                         {
+                            String[] suggestions;
                             suggestions = main.callAttr("suggest",newText).toJava(String[].class);
-                            Log.e("sanjay", Arrays.toString(suggestions));
                             if(suggestions.length>0)
                             {
-                                ArrayAdapter<String> suggestions_list = new ArrayAdapter<String>(MainActivity.this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestions);
-
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        ArrayAdapter<String> suggestions_list = new ArrayAdapter<String>(MainActivity.this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestions);
+
                                         auto.setAdapter(suggestions_list);
                                         if(!auto.isPopupShowing()) auto.showDropDown();
                                     }
@@ -784,7 +772,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         catch (PyException ignored)
                         {
-
+                            Log.e("sanjay","Exception caused");
                         }
                     }
                 }).start();

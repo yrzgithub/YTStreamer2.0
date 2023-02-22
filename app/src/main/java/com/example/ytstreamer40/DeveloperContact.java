@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 
 public class DeveloperContact extends AppCompatActivity implements View.OnClickListener {

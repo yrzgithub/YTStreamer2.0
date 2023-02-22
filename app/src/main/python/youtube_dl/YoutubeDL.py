@@ -96,7 +96,6 @@ from .utils import (
 )
 from .cache import Cache
 from .extractor import get_info_extractor, gen_extractor_classes, _LAZY_LOADER
-from .extractor.openload import PhantomJSwrapper
 from .downloader import get_suitable_downloader
 from .downloader.rtmp import rtmpdump_version
 from .postprocessor import (
@@ -1051,7 +1050,7 @@ class YoutubeDL(object):
                 'playlist_id': ie_result.get('id'),
                 'playlist_title': ie_result.get('title'),
                 'playlist_uploader': ie_result.get('uploader'),
-                'playlist_uploader_id': ie_result.get('uploader_id'),
+                'playlist_uploader_id': "Not found",
                 'playlist_index': playlistitems[i - 1] if playlistitems else i + playliststart,
                 'extractor': ie_result['extractor'],
                 'webpage_url': ie_result['webpage_url'],
@@ -2336,7 +2335,6 @@ class YoutubeDL(object):
 
         exe_versions = FFmpegPostProcessor.get_versions(self)
         exe_versions['rtmpdump'] = rtmpdump_version()
-        exe_versions['phantomjs'] = PhantomJSwrapper._version()
         exe_str = ', '.join(
             '%s %s' % (exe, v)
             for exe, v in sorted(exe_versions.items())

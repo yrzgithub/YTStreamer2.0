@@ -134,16 +134,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 version = Float.parseFloat(data.get("version"));
                 update_link = data.get(link);
 
-                if(version>getCurrentVersion() && !getPopShown())
+                Log.e("sanjay_ver",String.valueOf(getCurrentVersion()));
+
+                if(version>getCurrentVersion())
                 {
-                    latest_version = version;
-                    setPopShown(false);
                     show_update_pop();
-                    setPopShown(true);
-                }
-                else
-                {
-                    latest_version = getCurrentVersion();
                 }
             }
 
@@ -817,18 +812,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public float getCurrentVersion()
     {
-        return saved_data.getFloat("current_version",0);
-    }
-
-    public boolean getPopShown()
-    {
-        return saved_data.getBoolean("pop_shown",false);
-    }
-
-    public void setPopShown(boolean shown)
-    {
-        saved_data_editor.putBoolean("pop_shown",shown);
-        saved_data_editor.commit();
+        return saved_data.getFloat("current_version",3.1f);
     }
 
     public static void setLastQuery(String query)
@@ -841,6 +825,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         return saved_data.getString("last_query","anbe en anbe");
     }
+
+
 
     public void from_link(String source,boolean query,MediaPlayer.OnCompletionListener complete_listener)
     {

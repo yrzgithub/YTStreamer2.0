@@ -22,7 +22,7 @@ android {
         }
 
         python {
-            buildPython "D:\\pythonProject2\\venv2\\Scripts\\python.exe"
+            buildPython "D:\\Seenu\\Apps\\python3.10\\python.exe"
         }
 
     }

@@ -826,8 +826,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return saved_data.getString("last_query","anbe en anbe");
     }
 
-
-
     public void from_link(String source,boolean query,MediaPlayer.OnCompletionListener complete_listener)
     {
         new Thread(new Runnable() {

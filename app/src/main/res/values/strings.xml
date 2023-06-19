@@ -29,6 +29,7 @@
     <string name="open_in_youtube">Open in YouTube</string>
     <string name="download">Download</string>
     <string name="title_activity_lyrics">Lyrics</string>
+    <string name="about">About</string>
 
     <string name="lyrics">lyrics</string>
     <string name="load_yt_songs_list">Show YT songs list</string>

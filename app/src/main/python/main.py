@@ -28,7 +28,7 @@ def search(keywords):
 
 def get_stream_and_thumb(source,query=True):
     if query:
-        url = pywhatkit.playonyt(source,open_video = False)
+        url = pywhatkit.playonyt(source,open_video = False).split("\\\\")[0].strip()
     else:
         url = source
 
